@@ -16,12 +16,26 @@ type Product struct {
 DEV INTERFACE
 */
 
+func (product Product) _insert() {
+	INSERT := "INSERT INTO PRODUCTS (NAME, DESCRIPTION, PRICE, STOCK) VALUES ($1, $2, $3, $4);"
+
+	db := db.Connect()
+	insert, e := db.Prepare(INSERT)
+	if e != nil {
+		panic(e.Error())
+	}
+
+	insert.Exec(product.name, product.description, product.price, product.inStock)
+
+	defer db.Close()
+}
+
 /*
 USER INTERFACE
 */
 
-func NewProduct(id uint16, name string, description string, price float64, inStock int) *Product {
-	product := Product{id, name, description, price, inStock}
+func NewProduct(name string, description string, price float64, inStock int) *Product {
+	product := Product{0, name, description, price, inStock}
 	return &product
 }
 
@@ -63,8 +77,13 @@ func ListAll() []Product {
 			panic(e.Error())
 		}
 
-		p := NewProduct(id, name, description, price, stock)
+		p := NewProduct(name, description, price, stock)
 		products = append(products, *p)
 	}
 	return products
+}
+
+func (product Product) Insert() {
+	// no rules to append here yet
+	product._insert()
 }

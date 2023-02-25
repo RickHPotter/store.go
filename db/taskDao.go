@@ -8,10 +8,9 @@ import (
 
 func Connect() *sql.DB {
 	con := "user = postgres " +
-		"dbname = web_app_db_alura_course " +
+		"dbname = db_waac " +
 		"password = local " +
-		"host = " +
-		"localhost " +
+		"host = localhost " +
 		"sslmode = disable"
 	db, e := sql.Open("postgres", con)
 	if e != nil {
