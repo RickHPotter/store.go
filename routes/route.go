@@ -7,7 +7,13 @@ import (
 )
 
 func LoadRoute() {
+	//ACTIONS
+	http.HandleFunc("/insert", controllers.Insert)
+	http.HandleFunc("/update", controllers.Update)
+	http.HandleFunc("/delete", controllers.Delete)
+
+	// SCREENS
 	http.HandleFunc("/", controllers.Index)
 	http.HandleFunc("/new", controllers.New)
-	http.HandleFunc("/insert", controllers.Insert)
+	http.HandleFunc("/edit", controllers.Edit)
 }
